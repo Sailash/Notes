@@ -1,0 +1,222 @@
+working dir -> staging area -> repo[commit]
+
+config settings level
+	system	= 	to all user in system
+	global	=	to all repo of the user
+	local	=	to that particular repo
+
+--------------------------------
+
+git inti
+	to initialize the git repo
+
+git status
+	to see current status of working dir 
+
+git status -s
+	to see short form of status
+	
+git add <file>
+	to add the file in staging area
+	
+git commit -m <message> | git commit
+	to commit changes from staging are to repo
+	
+git commit -am <message>
+	to add and commit file in same command
+	-a = all modified file
+	-m = message to commit
+	
+--------------------------------
+	
+git ls-files
+	to list files in staging dir
+	
+git ls-tree <HEAD~3>
+	list all file and directory in the commit
+	
+git rm <file> | git rm -f <file>
+	to remove file from staging and working dir
+
+git rm --cached <file>
+	to remove file from staging but not from working dir
+
+git mv <source> <destination>
+	to move or rename file in staging and working dir
+	
+--------------------------------
+
+.gitignore
+	create this file in root of the gitt repo 
+	add the file or dir need to be not added in git repo
+
+--------------------------------
+
+git diff --stagged
+	to compare last commit and staging area
+	
+	@@ -1,3 +1,5 @@
+	-1,3	=	starting from 1st line 3 line has extracted and shown in output
+	+1,5	=	starting from 1st line 5 line has extracted and shown in output
+
+git diff
+	to compare staging area and working dir 
+
+git diff HEAD~2 HEAD~3
+	see change accross 2 commits
+	
+git diff HEAD~2 HEAD~3 <file>
+	see change accross 2 files in commits
+
+git diff HEAD~2 HEAD~3 --name-only
+	see different between files in file name
+	
+
+
+--------------------------------
+
+git log
+	to list history of commits 
+	from new to old order of commit viewed
+	
+git log --oneline
+	to list history of commits short summary or single line log
+
+git log --oneline --reverse
+	to reverse the commit view order (from old to new)
+
+git show <commit hash> | git show HEAD | git show HEAD~2 [ 2 steps back from HEAD ]
+	show the diff of latest and commit id mentioned in the show
+	
+git show HEAD:<pathToFile>
+	show the actual content of the file
+	eg: git show HEAD:/path/to/file.txt
+
+git show <fileHashId>
+	show the content of the file
+	to get file hash use (git ls-tree)
+	
+git show HEAD~3 --name-only | git show HEAD~3 --name-status
+	to get the status and name of the file modified in the commit
+
+git restore --staged <file>
+	undo the changes
+	restore the file from commit to staging
+
+git restore <file>
+	undo the changes
+	restore the file from staging to working dir
+
+git clean -fd
+	remove all untracked files and dir
+	-f	=	force
+	-d	=	remove directory
+
+git restore --source=HEAD~3 <file>
+	to restore file from different commits
+
+--------------------------------
+
+git log --oneline <file> | --start | --patch
+	to see what commits have touched this file
+
+git log --oneline --all
+	to see all commits even before the head pointer
+	because by default it shows only from head to base commit
+	when doing checkout use --all to see all commits
+
+git log --oneline --stat | git log --stat
+	to see all the files that have been changed in each commit
+	
+git log --oneline --patch
+	show diff of all the files that have beedn changed
+	
+git log --oneline -3
+	show last 3 commit
+
+git log --oneline --auther="<name>"
+	to filter based on auther name
+	
+git log --oneline --before="2022-08-10" | git log --oneline --after="2022-08-20" | git log --oneline --after="yesterday | one week ago | two days ago"	
+	to filter based on dates
+	
+git log --oneline --grep="search"
+	filter based on commit message
+	
+git log --oneline -S"hello" | git log --oneline -S"hello" --patch [ we can join multiple filters ]
+	filter based on content that added or removed
+	eg: search for content hello that is added or removed from file
+	
+git log --oneline startRange..endRange
+	filter based on range of commit id inbetween
+	eg: git log --oneline ead45..907gh
+	
+git log --oneline <file> | git log --oneline -- <file> [ -- is used to seperate options and search tag ]
+		to see which all the commits modified that file
+	
+git log --pretty=format:"constant %an"
+	to print log in custom format
+	$an			=	auther name
+	%H			=	full hash value
+	%h			=	short form of hash
+	%cd			=	commit date
+	%C<color>	=	to change color
+	%Creset		=	to reset color	
+	
+--------------------------------
+
+git config --global alias.<alias_name> "commands"
+	to create alias in git
+	eg: git config --global alias.lg "log --pretty=format:'constant %an'"
+	to use the alias "git lg"
+
+--------------------------------
+
+git checkout <commit_id> | git checkout master
+	to restore the working dir with the commit content
+
+
+[lesson 38]
+git bisect start
+git bisect bad
+git bisect good <commit_id>
+git bisect good
+git bisect reset
+		to narrow down and find commit bineary search method
+
+git shortlog | git shortlog -n -e -s --before="" --after=""
+	to see all contributers and summary of commit messages
+	
+git checkout <commit_id> <file>
+		to restore deleted file
+
+git blame <file> | -e | -L start, end
+	to find which line was inserted in which commit in that file
+		-L 1,3
+		get lines from 1 to 3
+
+--------------------------------
+
+git tag | git tag -n
+	light weight tag
+	to list all tags
+	-n	=	to see message
+	for light weight tag commit message will show
+
+git tag v1.0 | git tag v1.0 <commit_id>
+	to bookmark points in the history of our project
+	that commit represent that give version
+
+git tag -a v1.1 -m "<tag message>"
+	to create annontated tag
+
+git tag -d <tag_name>
+	to delete tag
+
+git checkout v1.0
+		to checkout using tag [same as commit]
+
+
+	
+	
+	
