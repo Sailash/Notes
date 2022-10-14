@@ -70,7 +70,9 @@ git diff HEAD~2 HEAD~3 <file>
 
 git diff HEAD~2 HEAD~3 --name-only
 	see different between files in file name
-	
+
+git diff <branch_name> <branch_name>
+	to compare two branchs
 
 
 --------------------------------
@@ -81,6 +83,9 @@ git log
 	
 git log --oneline
 	to list history of commits short summary or single line log
+
+git log --oneline --all --graph
+	to view commit in graph form
 
 git log --oneline --reverse
 	to reverse the commit view order (from old to new)
@@ -169,6 +174,10 @@ git config --global alias.<alias_name> "commands"
 	to create alias in git
 	eg: git config --global alias.lg "log --pretty=format:'constant %an'"
 	to use the alias "git lg"
+	
+git config merge.tool p4merge
+git config mergetool.p4merge.path "<path/to/p4mege>"
+	to change mergge tool
 
 --------------------------------
 
@@ -216,7 +225,77 @@ git tag -d <tag_name>
 git checkout v1.0
 		to checkout using tag [same as commit]
 
+--------------------------------
 
+git branch
+	to list all branches
+
+git branch <branch_name>
+	to create new branch
 	
+git status 
+	to see which branch we are currently
 	
+git switch <branch_name>
+	to change branch name
+
+git switch -C <branch_name>
+	to create and switch branch_name
+
+git branch -m <old_branch_name> <new_branch_name>
+	to rename branch name
 	
+git branch -d <branch_name> | -D
+	to delete branch
+	-D	=	to delete branch before commited to main branch
+	
+--------------------------------
+
+git stash push -m <message>
+	to store uncommited changes in the working dir in stash or some storage area
+	
+git stash --all -m <message>
+	to stash all files even unstaged file to stash area 
+
+git stash list
+	to list all stash's
+
+git stash show stash@{1} | git stash show 1
+	to show stats of all file modified from current working dir
+
+git stash apply 1
+	to apply the changes in working dir
+	
+git stash drop 1
+	to remove the stash
+
+git stash clear
+	to remove all the stash
+	
+--------------------------------
+
+git merge <branch_name>
+	fast forward merge
+	it will merge current branch with target branch
+	it will move the pointer to target branch
+
+git merge --no-ff branch_name
+	no fast-forward merge
+	it will merge current branch with target branch
+	it will do commit and merge aka merge commit
+	
+git merge --abort
+	to abort merge process
+	when having merge conflit it goes into merge state
+	need to resolve manually by openning and edit file
+	and commit changes to comple merge state
+	to abort this process we can do --abort
+
+git config ff no | --global
+	to disable fast-forward merge in the current repo
+	
+git branch --merged
+	to list all branches withch are merged with master branch
+	
+git branch --no-merged
+	to list all unmerged branches into master branch
