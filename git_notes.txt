@@ -117,7 +117,7 @@ git clean -fd
 	-f	=	force
 	-d	=	remove directory
 
-git restore --source=HEAD~3 <file>
+git restore --source=HEAD~3 -- <file>
 	to restore file from different commits
 
 --------------------------------
@@ -175,9 +175,19 @@ git config --global alias.<alias_name> "commands"
 	eg: git config --global alias.lg "log --pretty=format:'constant %an'"
 	to use the alias "git lg"
 	
+git config --global credential.helper cache
+	to store credential for 15 min in memory
+
 git config merge.tool p4merge
 git config mergetool.p4merge.path "<path/to/p4mege>"
 	to change mergge tool
+
+git mergetool
+	to open in merge tool software 
+	eg: p4merge
+
+git config mergetool.keepBackup false
+	to not take backup when doing merge or rebase of orginal file
 
 --------------------------------
 
@@ -230,6 +240,12 @@ git checkout v1.0
 git branch
 	to list all branches
 
+git branch -vv
+	to find how local and remote branch diverged
+
+git branch -r
+	to list all remote branch
+
 git branch <branch_name>
 	to create new branch
 	
@@ -241,6 +257,10 @@ git switch <branch_name>
 
 git switch -C <branch_name>
 	to create and switch branch_name
+	
+git switch -C <branch_name> origin/<remote_branch_name>
+	when we get new branch from remote it will not create in local
+	need to creat new branch in loacl repo and need to map to remote branch pointer in loacl repo
 
 git branch -m <old_branch_name> <new_branch_name>
 	to rename branch name
@@ -299,3 +319,71 @@ git branch --merged
 	
 git branch --no-merged
 	to list all unmerged branches into master branch
+
+git reset --hard HEAD~2 | --mixed | --soft
+	to rewrite commit history
+	it will change the head pointer and the current branch to that commit
+	
+git revert -m 1 HEAD
+	to revert the last commit
+	
+git merge --squash && git commit 
+	squash merge
+	instead of createing combining merging branchs and poluting the main history
+	create a merge in staging area from target and current branch and do a commit
+	and do commit the changes
+	
+[lesson 61]
+git rebase <parrent_branch>
+	rebase rewrites history
+	to move the branch start point to last commit in the parrent branch
+
+[lesson 61]
+git rebase --continue | --skip	| --abort
+	refer tutorial if needed
+	
+git cherry-pick <commit_id_only>
+	to get a perticular commit from other branch to currnt branch we are on
+	
+--------------------------------
+	
+git remote | git remote -v
+	show list of remote repo in the current repo we are working	
+
+git fetch
+	is to download latest change from remote repo
+	but current master pointer will be in the same commit which we are working on before fetching
+
+git branch -vv
+git merge orgin/master
+	to update the master pointer in sync with orgin master
+	
+git fetch orgin <branch_name>
+	to  download commit from particular branch
+	
+git pull | git pull --rebase
+	pull = fetch + merge
+	
+git push orgin master | -f 
+	to upload the commits to remote repo
+	-f = force
+
+git push <tag>
+	to push tag to remote repo
+
+git push --delete <tag>
+	to delete tag from remote repo only
+	not on local repo
+
+git push --set-upstream | -u orgin <branch_name>
+	to upload new branch in remote branch
+	by default branch are private by default
+	to upload a branch need to specify branch name explecitly
+
+git push -d orgin <branch_name>
+	to delete branch from remote repo
+	but it will not delete local repo branch
+
+[ lesson 78 ]
+git remote prune orgin
+	to delete remote tracking branch that aren't in remote repo
